@@ -8,7 +8,7 @@ export const lightTheme = {
     purple: {
       700: "#4B2995",
       500: "#8047F8",
-      200: "#EBE579"
+      200: "#EBE5F9"
     },
     hover: "#D7D5D5",
     title: "#272221",
@@ -30,6 +30,8 @@ export const lightTheme = {
       xl: "1.25rem",
       '2xl': "1.5rem",
       '3xl': "1.75rem",
+      '4xl': "2rem",
+      '5xl': "3rem"
     },
     lineHeight: {
       sm: "1.3",

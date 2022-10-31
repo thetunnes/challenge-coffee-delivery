@@ -9,14 +9,19 @@ export const GlobalStyles = css`
     box-sizing: border-box;
   }
 
+  :focus {
+    outline: 0;
+    box-shadow: 0 0 0 2px ${lightTheme.colors.purple[700]};
+  }
+
   body {
     background: ${lightTheme.colors.background};
     color: ${lightTheme.colors.text};
+    min-height: 100vh;
   }
 
   body, input, textarea, button {
     font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
     font-weight: 400;
     color: ${lightTheme.colors.text};
   }
@@ -28,13 +33,13 @@ export const GlobalStyles = css`
 
   @media screen and (max-width: 1120px) {
     html {
-      font-size: 93.75%;
+      font-size: 93.75% !important;
     }
   }
 
   @media screen and (max-width: 768px) {
     html {
-      font-size: 87.5%;
+      font-size: 87.5% !important;
     }
   }
 `

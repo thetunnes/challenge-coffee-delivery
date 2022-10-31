@@ -9,4 +9,8 @@ export const LayoutContainer = styled.div`
   justify-content: center;
   
   margin: 0 auto;
+
+  @media screen and (max-width: 1120px) {
+    padding: 0 2rem;
+  }
 `
