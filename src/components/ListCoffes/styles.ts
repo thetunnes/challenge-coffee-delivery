@@ -7,6 +7,21 @@ export const ListCoffeeContainer = styled.div`
     margin: 2rem 0;
   }
 
+  .not-found-coffees {
+    margin: 3rem auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+
+    > svg {
+      color: ${props => props.theme.colors.yellow[500]};
+      font-size: 1.5rem;
+    }
+  }
+
   main {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -77,7 +92,7 @@ export const ListCoffeeContainer = styled.div`
           align-items: center;
           gap: 0.5rem;
 
-          button {
+          button[type="submit"] {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -101,6 +116,7 @@ export const ListCoffeeContainer = styled.div`
   @media screen and (max-width: 1024px) {
     main {
       grid-template-columns: repeat(2, 1fr);
+      align-items: center;
     }
   }
 

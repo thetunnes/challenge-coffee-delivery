@@ -1,5 +1,7 @@
 import { useListCoffees } from "../../context/coffee";
-import { CheckoutContainer } from "./styles";
+import { z } from "zod"
+import InputMask from "react-input-mask"
+import { useNavigate } from "react-router-dom";
 import {
   Bank,
   CreditCard,
@@ -7,10 +9,63 @@ import {
   MapPinLine,
   Money,
 } from "phosphor-react";
-import { useEffect } from "react";
 import { ShoppingCart } from "../../components/ShoppingCart";
+import { CheckoutContainer } from "./styles";
+
+const validateCheckout = z.object({
+  cep: z.object({
+    value: z.string().regex(/^[0-9]{5}-[0-9]{3}$/)
+  }),
+  street: z.object({
+    value: z.string()
+  }),
+  number: z.object({
+    value: z.string().min(2).max(5)
+  }),
+  adjunct: z.object({
+    value: z.string().optional()
+  }),
+  district: z.object({
+    value: z.string()
+  }),
+  city: z.object({
+    value: z.string()
+  }),
+  uf: z.object({
+    value: z.string().length(2)
+  }),
+  payment: z.object({
+    value: z.string()
+  })
+})
+
 
 export function Checkout() {
+
+  const { newOrderFinished } = useListCoffees()
+  const navigate = useNavigate()
+
+  function handleSubmit(e: any) {
+    e.preventDefault()
+
+    const infosFieldForm = validateCheckout.parse(e.target)
+    type typeName = keyof typeof infosFieldForm
+    const arrayInfosForm = Object.keys(infosFieldForm) as Array<keyof typeof infosFieldForm>
+
+
+    const formattedDataForm = arrayInfosForm.reduce((acc, nameField) => {
+      return {
+        ...acc,
+        [nameField]: infosFieldForm[nameField].value
+      }
+    }, {})
+
+    const jsonForm = JSON.stringify(formattedDataForm)
+    localStorage.setItem('@coffee-delivery-1.0.0', jsonForm)
+    newOrderFinished()
+    navigate("/success")
+
+  }
   return (
     <CheckoutContainer>
       <section className="checkout-address">
@@ -24,22 +79,23 @@ export function Checkout() {
             </div>
           </div>
 
-          <form id="dataClient">
-            <input type="text" name="cep" id="" placeholder="CEP" />
-            <input type="text" name="street" id="" placeholder="Rua" />
+          <form id="dataClient" onSubmit={handleSubmit}>
+            <InputMask type="text" name="cep" id="" placeholder="CEP" required mask="99999-999" />
+            <input type="text" name="street" id="" placeholder="Rua" required />
             <div>
-              <input type="text" name="number" id="" placeholder="Número" />
+              <InputMask type="text" name="number" id="" placeholder="Número" required mask="9999" maskPlaceholder={null} alwaysShowMask={false} />
               <input
                 type="text"
                 name="adjunct"
                 id="adjunct"
                 placeholder="Complemento"
+                
               />
             </div>
             <div>
-              <input type="text" name="district" id="" placeholder="Bairro" />
-              <input type="text" name="city" id="city" placeholder="Cidade" />
-              <input type="text" name="uf" id="uf" placeholder="UF" />
+              <input type="text" name="district" id="" placeholder="Bairro" required />
+              <input type="text" name="city" id="city" placeholder="Cidade" required />
+              <InputMask type="text" name="uf" id="uf" placeholder="UF" mask="aa" required />
             </div>
           </form>
         </div>
@@ -59,6 +115,7 @@ export function Checkout() {
               name="payment"
               type="radio"
               form="dataClient"
+              value="creditCard"
             />
             <label htmlFor="creditCard">
               <CreditCard weight="regular" color="#8047F8" size={16} />
@@ -69,12 +126,13 @@ export function Checkout() {
               name="payment"
               type="radio"
               form="dataClient"
+              value="debitCard"
             />
             <label htmlFor="debitCard">
               <Bank weight="regular" color="#8047F8" size={16} />
               Cartão de débito
             </label>
-            <input id="money" name="payment" type="radio" form="dataClient" />
+            <input id="money" name="payment" type="radio" form="dataClient" value="money" />
             <label htmlFor="money">
               <Money weight="regular" color="#8047F8" size={16} />
               Dinheiro

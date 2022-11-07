@@ -49,9 +49,13 @@ export const CartContainer = styled.section`
               display: flex;
               align-items: center;
               gap: 0.25rem;
-              padding: 0.5rem;
               border-radius: 6px;
               font-size: ${(props) => props.theme.font.size.lg};
+              padding: 0.5rem;
+              /* &:not([type="submit"]) {
+                padding: 0;
+                box-shadow: unset;
+              } */
             }
           }
         }

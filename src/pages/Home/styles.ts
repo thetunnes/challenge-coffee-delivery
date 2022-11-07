@@ -50,6 +50,15 @@ export const HomeContainer = styled.div`
       }
 
       img {
+        width: 70%;
+      }
+    }
+  }
+
+  @media screen and (max-width: 512px) {
+    .main-banner {
+
+      img {
         width: 90%;
       }
     }

@@ -19,6 +19,9 @@ export function Header() {
 
   const { coffeeShoppingCart } = useListCoffees()
 
+  const dataFromLocalStorage = localStorage.hasOwnProperty('@coffee-delivery-1.0.0')
+  let urlButtonLocation = dataFromLocalStorage ? "success" : "#"
+
   const [currentLocation, setCurrentLocation] = useState("")
   const [amountCoffeesInShoppingCart, setAmountCoffeesInShoppingCart] = useState<string[]>([])
   const successCallback = async ({ coords }: callBack) => {
@@ -33,14 +36,19 @@ export function Header() {
   navigator.geolocation.getCurrentPosition(successCallback);
 
   useEffect(() => {
-    setAmountCoffeesInShoppingCart(Object.keys(coffeeShoppingCart))
+    if (coffeeShoppingCart) {
+      const amountInCart = Object.keys(coffeeShoppingCart)
+      setAmountCoffeesInShoppingCart(amountInCart)
+    }
   }, [coffeeShoppingCart])
+
+  console.log(urlButtonLocation)
 
   return (
     <HeaderContainer>
       <NavLink to="/"><LogoCoffeeDelivery /></NavLink>
       <nav>
-        <NavLink to="#">
+        <NavLink to={urlButtonLocation}>
           <MapPin size={20} weight="fill" color="#8047F8" /> {currentLocation}
         </NavLink>
         <NavLink to="checkout">

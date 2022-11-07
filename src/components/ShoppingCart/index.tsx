@@ -29,12 +29,13 @@ export function ShoppingCart() {
 
   async function renderCoffeesInShoppingCar() {
     let allCoffeesInCart: CoffeeCart[] = [];
-    idCoffees.map((idCof) => {
+    idCoffees.forEach((idCof) => {
       let coffeesCart = allCoffees.filter(
         (coffee) => coffee.id === Number(idCof)
       );
       allCoffeesInCart.push(...coffeesCart);
     });
+    // console.log("Vou renderizar essa lista", allCoffeesInCart)
 
     setCoffeesInCart(allCoffeesInCart);
   }
@@ -56,7 +57,7 @@ export function ShoppingCart() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>, idCoffee: number) {
     e.preventDefault();
-    const inputNumber = e.target[0] as HTMLInputElement;
+    const inputNumber = e.target[`amountCoffee${idCoffee}`] as HTMLInputElement;
     removeCoffeeInShoppingCart(idCoffee, inputNumber.value);
   }
 
@@ -66,7 +67,7 @@ export function ShoppingCart() {
 
   useEffect(() => {
     renderCoffeesInShoppingCar();
-  }, [allCoffees, coffeeShoppingCart]);
+  }, [coffeeShoppingCart]);
 
   useEffect(() => {
     totalValueToPay();

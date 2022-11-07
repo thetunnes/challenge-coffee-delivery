@@ -91,13 +91,17 @@ export const CheckoutContainer = styled.div`
         }
       }
 
-      #dataClient {
+      form#dataClient {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         align-items: flex-start;
         justify-content: center;
         gap: 1rem;
+
+        input:not(:required):after {
+          content: 'opcional';
+        }
 
         > div {
           width: 100%;
@@ -120,6 +124,7 @@ export const CheckoutContainer = styled.div`
 
           input#uf {
             flex: 0.25;
+            text-transform: uppercase;
           }
         }
         input {

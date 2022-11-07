@@ -42,9 +42,9 @@ export function InputNumber({ idCoffee, maxValue, defaultValue }: Props) {
 
   return (
     <InputNumberContainer>
-      <span id={`downNumber${idCoffee}`} onClick={removeAmountCoffee}>
-        <Minus color="#8047F8" weight="bold" size={14} />
-      </span>
+      <button type="button" id={`downNumber${idCoffee}`} onClick={removeAmountCoffee}>
+        <Minus weight="bold" size={14} />
+      </button>
       <input
         id={`amountCoffeeSelected${idCoffee}`}
         name={`amountCoffee${idCoffee}`}
@@ -53,9 +53,9 @@ export function InputNumber({ idCoffee, maxValue, defaultValue }: Props) {
         placeholder="00"
         defaultValue={defaultValue}
       />
-      <span id={`upNumber${idCoffee}`} onClick={addAmountCoffee}>
-        <Plus color="#8047F8" weight="bold" size={14} />
-      </span>
+      <button type="button" id={`upNumber${idCoffee}`} onClick={addAmountCoffee}>
+        <Plus weight="bold" size={14} />
+      </button>
     </InputNumberContainer>
   );
 }

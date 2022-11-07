@@ -1,6 +1,6 @@
 import { useListCoffees } from "../../context/coffee"
 import { ListCoffeeContainer } from "./styles"
-import { ShoppingCart } from 'phosphor-react';
+import { ShoppingCart, SmileySad } from 'phosphor-react';
 import { InputNumber } from './../InputNumber/index';
 import { formatPriceCoffee } from "../../pages/Home";
 
@@ -11,12 +11,10 @@ export function ListCoffee() {
   function handleSubmit(e: any, idCoffee: number) {
     e.preventDefault()
 
-    // console.log(e.target[0])
-    const amountCoffees = e.target[0].value
+    const amountCoffees = e.target[`amountCoffee${idCoffee}`].value
     const newCoffee = {
       [idCoffee]: amountCoffees
     }
-
     if (amountCoffees > 0) {
       addNewCoffeeInShoppingCart(newCoffee)
     }
@@ -27,13 +25,13 @@ export function ListCoffee() {
       <h2>Nossos cafés</h2>
 
       <main>
-        {allCoffees.length ? allCoffees.map(coffee => (
+      {allCoffees && allCoffees.length ? allCoffees.map(coffee => (
           <div className="single-box-coffee" key={coffee.id}>
             <img src={coffee.img} />
             <div className="list-tags-coffee">
-            {coffee.tags.map(tag => (
-              <span key={tag}>{tag}</span>
-            ))}
+              {coffee.tags.map(tag => (
+                <span key={tag}>{tag}</span>
+              ))}
             </div>
             <h3>{coffee.name}</h3>
             <p>{coffee.description}</p>
@@ -46,7 +44,7 @@ export function ListCoffee() {
             </div>
 
           </div>
-        )): <p>Não encontramos cafés em nosso estoque :(</p>}
+      )) : <p className="not-found-coffees">Não encontramos cafés em nosso estoque <SmileySad weight="fill" /></p>}
       </main>
     </ListCoffeeContainer>
   )
